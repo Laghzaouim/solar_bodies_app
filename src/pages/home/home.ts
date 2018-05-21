@@ -31,9 +31,6 @@ export class PlanetsPage implements OnInit {
     })
   }
 
-  test(newPlanet: IPlanets){
-
-  }
 
   addPlanets(name: string, diameter: null, distanceFromSun: number, surface: string, nameMoon:string, diameterMoon: null) {
    

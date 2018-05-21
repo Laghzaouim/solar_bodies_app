@@ -9,13 +9,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SolarBodiesProvider } from '../providers/solar-bodies/solar-bodies';
 import { HttpClientModule } from '@angular/common/http';
-import { AsteroidsPage } from '../pages/asteroids/asteroids';
 
 @NgModule({
   declarations: [
     MyApp,
     PlanetsPage,
-    AsteroidsPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +24,6 @@ import { AsteroidsPage } from '../pages/asteroids/asteroids';
   entryComponents: [
     MyApp,
     PlanetsPage,
-    AsteroidsPage
   ],
   providers: [
     StatusBar,
