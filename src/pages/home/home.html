@@ -9,28 +9,33 @@
 
 <ion-content padding>
 
-    <ion-grid  *ngIf="data">
-        <ion-row >
-          <ion-col>Name</ion-col>
-            <ion-col>Surface</ion-col>
-            <ion-col>Diameter (km)</ion-col>
-            <ion-col>Distance Sun (au)</ion-col>
-            <ion-col>Moon name</ion-col>
-        </ion-row>
-      </ion-grid>
+  <div *ngIf="data">
 
-  <ion-grid  *ngIf="data">
+    <ion-grid>
+      <ion-row class="rowHeader">
+        <ion-col>Name</ion-col>
+        <ion-col>Surface</ion-col>
+        <ion-col>Diameter (km)</ion-col>
+        <ion-col>Distance Sun (au)</ion-col>
+        <ion-col>Moon name</ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="data">
       <ion-row *ngFor="let planet of data">
         <ion-col>{{planet.name}}</ion-col>
         <ion-col>{{planet.surface}}</ion-col>
-          <ion-col>{{planet.diameter}}</ion-col>
-          <ion-col>{{planet.distanceFromSun }}</ion-col>
-          <ion-col>{{planet.moon.name}}</ion-col>
+        <ion-col>{{planet.diameter}}</ion-col>
+        <ion-col>{{planet.distanceFromSun }}</ion-col>
+        <ion-col>
+          <span *ngIf="planet.moon">{{planet.moon.name}}</span>
+        </ion-col>
       </ion-row>
     </ion-grid>
 
     <div class="center">
-  
-    <button ion-fab (tap)="showPrompt()">Add</button>
+      <button ion-fab (tap)="showPrompt()">Add</button>
+    </div>
+
   </div>
 </ion-content>

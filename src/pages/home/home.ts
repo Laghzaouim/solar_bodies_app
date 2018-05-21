@@ -6,26 +6,55 @@ import { SolarBodiesProvider, IPlanets } from '../../providers/solar-bodies/sola
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit {
+export class PlanetsPage implements OnInit {
 
 
+  testName: string;
   data: IPlanets[]
+  planetsUrl: string
 
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public provider: SolarBodiesProvider) {
+  newPlanet:IPlanets
+
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public provider: SolarBodiesProvider) {
 
   }
 
   ngOnInit(): void {
     this.provider.getData().subscribe(result => {
       //debugger
-      let planetsUrl = result[0].planets;
-      console.log(planetsUrl)
-      this.provider.getPlanets(planetsUrl).subscribe(result => {
-        console.log(result[0])      
-          this.data = result
+      this.planetsUrl = result[0].planets;
+      console.log(this.planetsUrl)
+      this.provider.getPlanets(this.planetsUrl).subscribe(result => {
+        console.log(result[0])
+        this.data = result
       })
     })
   }
+
+  test(newPlanet: IPlanets){
+
+  }
+
+  addPlanets(name: string, diameter: null, distanceFromSun: number, surface: string, nameMoon:string, diameterMoon: null) {
+   
+
+    let newPlanet: IPlanets = {
+      name: name,
+      diameter: diameter,
+      distanceFromSun: distanceFromSun,
+      surface: surface,
+      moon: {
+        name:nameMoon,
+        diameter: diameterMoon
+      } 
+      
+    }
+
+    this.provider.addPlanets(newPlanet, this.planetsUrl).subscribe(
+      planet => this.data.push(newPlanet));
+  }
+
+
 
   showPrompt() {
     let prompt = this.alertCtrl.create({
@@ -48,16 +77,13 @@ export class HomePage implements OnInit {
           placeholder: 'Distance Sun in au'
         },
         {
-          name: 'MoonName',
+          name: 'NameMoon',
           placeholder: 'Moon name'
         },
         {
-          name: 'MoonDiameter',
+          name: 'DiameterMoon',
           placeholder: 'Moon diameter in km'
         },
-      
-      
-      
       ],
       buttons: [
         {
@@ -70,14 +96,20 @@ export class HomePage implements OnInit {
           text: 'Save',
           handler: data => {
             console.log('Saved clicked');
-            console.log(data.Surface)
+        
+            this.addPlanets(
+              data.Name,
+              data.Diameter,
+              data.DistanceSun,
+              data.Surface,
+              data.NameMoon,
+              data.DiameterMoon
+            );
+
           }
         }
       ]
     });
     prompt.present();
   }
-
-
-
 }

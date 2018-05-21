@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -15,6 +15,8 @@ export class SolarBodiesProvider {
 
   apiUrl = 'http://localhost:5000/api/v1/';
 
+
+
   constructor(public http: HttpClient) {
     console.log('Hello SolarBodiesProvider Provider');
   }
@@ -23,12 +25,23 @@ export class SolarBodiesProvider {
     return this.http.get<ISolarBodies[]>(this.apiUrl);
   }
 
-  getPlanets(url: string): Observable<IPlanets[]>{
+  getPlanets(url: string): Observable<IPlanets[]> {
     return this.http.get<IPlanets[]>(url);
   }
 
-  getAstreoids(url: string): Observable<IAsteroids[]>{
+  getAstreoids(url: string): Observable<IAsteroids[]> {
     return this.http.get<IAsteroids[]>(url);
+  }
+
+
+  addPlanets(planet: IPlanets, url: string): Observable<IPlanets> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        
+      })
+    };
+    return this.http.post<IPlanets>(url, planet, httpOptions);
   }
 
 }
@@ -49,16 +62,16 @@ export interface IAsteroids {
 
 
 export interface IPlanets {
-  id: number;
+  id?: number;
   name: string;
   surface: string;
   diameter: number;
   distanceFromSun: number;
-  moon: IMoon;
+  moon?: IMoon;
 }
 
 export interface IMoon {
-  id: number;
+  id?: number;
   name: string;
   diameter: number;
 }
